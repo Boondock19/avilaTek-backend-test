@@ -1,10 +1,9 @@
 import express, { Express } from "express";
-import cors from 'cors'
+import cors from "cors";
 
-import {dbConection} from '../db/config'
+import { dbConection } from "../db/config";
 import { router as userRouter } from "../routes/user";
 import { router as authRouter } from "../routes/auth";
-
 
 /**
  * Clase encargar de lenvantar el servidor de express
@@ -13,53 +12,48 @@ import { router as authRouter } from "../routes/auth";
  */
 
 export class Server {
+  app: Express;
+  port: string;
+  usuariosPath: string;
+  authPath: string;
 
-    app: Express
-    port: string
-    usuariosPath: string
-    authPath: string
+  constructor() {
+    this.app = express();
+    this.port = process.env.PORT || "8000";
+    this.usuariosPath = "/api/users";
+    this.authPath = "/api/auth";
 
+    //
+    this.conectDB();
+    // Middlewares
+    this.middlewares();
+    // Rutas de mi aplicación
+    this.routes();
+  }
 
-    constructor() {
-        this.app = express(); 
-        this.port = process.env.PORT || '8000'
-        this.usuariosPath = '/api/users'
-        this.authPath = '/api/auth'
+  middlewares() {
+    // CORS
+    this.app.use(cors());
 
-        //
-        this.conectDB()
-        // Middlewares
-        this.middlewares()
-        // Rutas de mi aplicación
-        this.routes()
-    }
+    // Lectura y parseo del body
+    this.app.use(express.json());
 
-    middlewares() {
-        // CORS
-        this.app.use(cors())
+    // Directorio público
+    this.app.use(express.static("public"));
+  }
 
-        // Lectura y parseo del body
-        this.app.use(express.json())
+  async conectDB() {
+    await dbConection();
+  }
 
-        // Directorio público
-        this.app.use(express.static('public'))
-    }
+  routes() {
+    this.app.use(this.usuariosPath, userRouter);
+    this.app.use(this.authPath, authRouter);
+  }
 
-    async conectDB() {
-        await dbConection()
-
-    }
-
-    routes()  {
-       this.app.use(this.usuariosPath,userRouter)
-       this.app.use(this.authPath,authRouter)
-    }
-
-    listen() {
-        this.app.listen(this.port, () => {
-            console.log(`Example app listening on port ${this.port}`)
-          })
-    }
-
-} 
-
+  listen() {
+    this.app.listen(this.port, () => {
+      console.log(`Example app listening on port ${this.port}`);
+    });
+  }
+}

@@ -56,5 +56,5 @@ exports.userGetPaginationsValidator = [
             return res.status(400).json({ status: "error", errors });
         }
         next();
-    }
+    },
 ];

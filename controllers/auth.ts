@@ -1,7 +1,6 @@
 import { Response, Request } from "express";
 import { loginUser, logoutUser } from "../services/auth";
 
-
 /**
  * Archivo destinado a manejar la entrada y salida de datos de la API de Auth.
  */
@@ -27,7 +26,6 @@ export const signinUser = async (req: Request, res: Response) => {
       user: signinResponse?.foundUser,
       token: signinResponse?.token,
     });
-
   } catch (error) {
     console.log(error);
     if (error instanceof Error)
@@ -37,20 +35,18 @@ export const signinUser = async (req: Request, res: Response) => {
   }
 };
 
-
 /**
  * Funcion encargada de manejar el signout de un usuario.
  * @param req request de express
  * @param res response de express
- * @returns Retorna el usuario que se deslogueo, nuevamente 
+ * @returns Retorna el usuario que se deslogueo, nuevamente
  * al no tener una especificacion, devuelvo al usuario para facilitar
  * la verificacion del cambio de estado, pero se puede devolver una respuesta
  * positiva sin informacion del usuario.
  */
 export const signoutUser = async (req: Request, res: Response) => {
   try {
-
-    const id = req.id
+    const id = req.id;
 
     if (!id) {
       throw new Error("Faltan datos necesarios para el signout");
@@ -64,7 +60,6 @@ export const signoutUser = async (req: Request, res: Response) => {
       msg: "Success",
       user: signoutResponse,
     });
-
   } catch (error) {
     console.log(error);
     if (error instanceof Error)
@@ -72,4 +67,4 @@ export const signoutUser = async (req: Request, res: Response) => {
         msg: error.message,
       });
   }
-}
+};

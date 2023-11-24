@@ -19,12 +19,12 @@ const mongoose_1 = __importDefault(require("mongoose"));
  */
 const dbConection = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield mongoose_1.default.connect(process.env.MONGODB_CNN || '');
-        console.log('DB Online');
+        yield mongoose_1.default.connect(process.env.MONGODB_CNN || "");
+        console.log("DB Online");
     }
     catch (error) {
         console.log(error);
-        throw new Error('Error a la hora de iniciar la BD');
+        throw new Error("Error a la hora de iniciar la BD");
     }
 });
 exports.dbConection = dbConection;

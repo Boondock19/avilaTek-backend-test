@@ -1,16 +1,14 @@
 import { Response, Request } from "express";
 import { UserPostBody } from "../types/user/user.types";
-import { saveUser,getUsers,getUserById } from "../services/user";
+import { saveUser, getUsers, getUserById } from "../services/user";
 
 /**
  * Archivo destinado a manejar la entrada y salida de datos de la API de User.
  */
 
-
-
 /**
  * Funcion para obtener los usuarios de la base de datos
- * de manera paginada, solicitda de manera obligatoria 
+ * de manera paginada, solicitda de manera obligatoria
  * page y limit, page indica la pagina que se quiere obtener
  * y limit la cantidad de registros que se quieren obtener
  * @param req Request de express
@@ -20,22 +18,20 @@ import { saveUser,getUsers,getUserById } from "../services/user";
  */
 
 export const userGet = async (req: Request, res: Response) => {
-  const { page,limit } = req.query;
+  const { page, limit } = req.query;
 
-  
   try {
-
     if (page === undefined || limit === undefined) {
       throw new Error("Faltan datos necesarios para el obtener los usuarios");
     }
 
-    const getUsersResponse = await getUsers(Number(page),Number(limit));
+    const getUsersResponse = await getUsers(Number(page), Number(limit));
 
     if (!getUsersResponse) {
       throw new Error("Error al obtener los usuarios");
     }
 
-    const {users,totalUsers} = getUsersResponse;
+    const { users, totalUsers } = getUsersResponse;
 
     res.json({
       msg: "Success",
@@ -50,8 +46,6 @@ export const userGet = async (req: Request, res: Response) => {
         msg: error.message,
       });
   }
-
-  
 };
 
 /**
@@ -63,7 +57,6 @@ export const userGet = async (req: Request, res: Response) => {
  */
 
 export const currentUserByIdGet = async (req: Request, res: Response) => {
-  
   try {
     const id = req.id;
     if (!id) {
@@ -82,8 +75,6 @@ export const currentUserByIdGet = async (req: Request, res: Response) => {
         msg: error.message,
       });
   }
-
- 
 };
 
 /**
@@ -91,14 +82,12 @@ export const currentUserByIdGet = async (req: Request, res: Response) => {
  * en el sistema, se solicita username, email y password
  * @param req request de express
  * @param res response de express
- * @returns retorna una respuesta positiva con el usuario creado. 
+ * @returns retorna una respuesta positiva con el usuario creado.
  * Como no tenia especificaciones al respecto de que devolver en este caso,
  * decidi devolver el usuario creado, para facilidad al momento de verificar,
- * pero dependiendo de la logica del negocio, simplemente se podria devolver una 
+ * pero dependiendo de la logica del negocio, simplemente se podria devolver una
  * respuesta positiva indicando que se creo, pero sin informacion del usuario.
  */
-
-
 
 export const userPost = async (req: Request, res: Response) => {
   try {
@@ -124,12 +113,8 @@ export const userPost = async (req: Request, res: Response) => {
   } catch (error) {
     console.log(error);
     if (error instanceof Error)
-     return res.status(400).json({
+      return res.status(400).json({
         msg: error.message,
       });
   }
 };
-
-
-
-

@@ -12,7 +12,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
  * a la variable de entorno SECRET_KEY
  */
 dotenv_1.default.config();
-const secretKey = process.env.SECRET_KEY || '';
+const secretKey = process.env.SECRET_KEY || "";
 const jwt = jsonwebtoken_1.default;
 // Funcion para crear un jwt en base a un payload, en este caso es solo el id
 const generateJWT = (payload) => {

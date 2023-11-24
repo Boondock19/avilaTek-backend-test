@@ -14,7 +14,7 @@ const validateJWT_1 = require("../middlewares/validateJWT");
  */
 exports.router = (0, express_1.Router)();
 // get sin paginacion
-exports.router.get('/', user_validator_1.userGetPaginationsValidator, user_1.userGet);
-exports.router.get('/currentuser', validateJWT_1.validateJWT, user_1.currentUserByIdGet);
-exports.router.post('/signup', user_validator_1.userCreateValidator, user_1.userPost);
+exports.router.get("/", user_validator_1.userGetPaginationsValidator, user_1.userGet);
+exports.router.get("/currentuser", validateJWT_1.validateJWT, user_1.currentUserByIdGet);
+exports.router.post("/signup", user_validator_1.userCreateValidator, user_1.userPost);
 exports.default = exports.router;

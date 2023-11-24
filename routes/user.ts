@@ -1,7 +1,10 @@
-import  {Router} from 'express'
-import {userGet, userPost,currentUserByIdGet} from '../controllers/user'
-import {userCreateValidator,userGetPaginationsValidator} from '../validators/user.validator'
-import { validateJWT } from '../middlewares/validateJWT'
+import { Router } from "express";
+import { userGet, userPost, currentUserByIdGet } from "../controllers/user";
+import {
+  userCreateValidator,
+  userGetPaginationsValidator,
+} from "../validators/user.validator";
+import { validateJWT } from "../middlewares/validateJWT";
 
 /**
  * Archivo destinado a manejar las rutas de api para User.
@@ -11,15 +14,12 @@ import { validateJWT } from '../middlewares/validateJWT'
  * que el jwt es valido y guardar el id del usuario en el request.
  */
 
-export const router : Router = Router()
+export const router: Router = Router();
 // get sin paginacion
-router.get('/', userGetPaginationsValidator,userGet)
+router.get("/", userGetPaginationsValidator, userGet);
 
-router.get('/currentuser',validateJWT,currentUserByIdGet)
+router.get("/currentuser", validateJWT, currentUserByIdGet);
 
+router.post("/signup", userCreateValidator, userPost);
 
-  router.post('/signup', userCreateValidator,userPost)
-
-
-  export default router;
-
+export default router;

@@ -1,6 +1,4 @@
-
-import {Schema,model} from 'mongoose';
-
+import { Schema, model } from "mongoose";
 
 /**
  * Modelo de la coleccion user en la base datos
@@ -12,43 +10,43 @@ import {Schema,model} from 'mongoose';
  */
 
 interface User {
-    id:string,
-    username:string,
-    email:string,
-    password:string,
-    status  : boolean
-    session : boolean
+  id: string;
+  username: string;
+  email: string;
+  password: string;
+  status: boolean;
+  session: boolean;
 }
 
 const UserSchema = new Schema<User>({
-    username: {
-        type: String,
-        required: [true,'El nombre es obligatorio'],
-        unique: true
-    },
-    email: {
-        type: String,
-        required: [true,'El email es obligatorio'],
-        unique: true
-    },
-    password: {
-        type: String,
-        required: [true,'La contraseña es obligatoria']
-    },
-    status: {
-        type: Boolean,
-        default: true
-    },
-    session: {
-        type: Boolean,
-        default: false
-    }
-})
+  username: {
+    type: String,
+    required: [true, "El nombre es obligatorio"],
+    unique: true,
+  },
+  email: {
+    type: String,
+    required: [true, "El email es obligatorio"],
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: [true, "La contraseña es obligatoria"],
+  },
+  status: {
+    type: Boolean,
+    default: true,
+  },
+  session: {
+    type: Boolean,
+    default: false,
+  },
+});
 
-UserSchema.methods.toJSON = function() {
-    const { __v, password, _id, ...usuario  } = this.toObject();
-    usuario.id = _id;
-    return usuario;
-}
+UserSchema.methods.toJSON = function () {
+  const { __v, password, _id, ...usuario } = this.toObject();
+  usuario.id = _id;
+  return usuario;
+};
 
-export const User = model<User>('User',UserSchema)
+export const User = model<User>("User", UserSchema);

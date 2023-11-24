@@ -1,5 +1,5 @@
-import {Server} from './models/server'
-import dotenv from 'dotenv';
+import { Server } from "./models/server";
+import dotenv from "dotenv";
 
 dotenv.config();
 
@@ -8,6 +8,6 @@ dotenv.config();
  * iniciar el servidor.
  */
 
-const server = new Server ()
+const server = new Server();
 
-server.listen()
+server.listen();

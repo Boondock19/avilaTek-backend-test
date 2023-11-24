@@ -23,7 +23,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
  */
 dotenv_1.default.config();
 // const ObjectId = mongoose.Types.ObjectId
-const secretKey = process.env.SECRET_KEY || '';
+const secretKey = process.env.SECRET_KEY || "";
 /**
  * Funcion encargada de validar el token del usuario
  * y en caso positivo agregar el valor de id al request
@@ -37,13 +37,13 @@ const validateJWT = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
     const jwt = jsonwebtoken_1.default;
     if (!token) {
         return res.status(401).json({
-            status: 'error',
-            msg: 'No hay token en la petición'
+            status: "error",
+            msg: "No hay token en la petición",
         });
     }
     try {
         // Limpiamos el token
-        const cleanToken = token.replace('Bearer ', '');
+        const cleanToken = token.replace("Bearer ", "");
         // Tomamos el ID del payload
         const payload = jwt.verify(cleanToken, secretKey);
         //Buscamos al usuario en la DB
@@ -58,16 +58,16 @@ const validateJWT = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
     catch (error) {
         console.log(error);
         if (error instanceof Error) {
-            if (error.message === 'jwt expired') {
+            if (error.message === "jwt expired") {
                 return res.status(401).json({
-                    status: 'error',
-                    msg: 'Token expirado'
+                    status: "error",
+                    msg: "Token expirado",
                 });
             }
         }
         return res.status(401).json({
-            status: 'error',
-            msg: 'Token no válido'
+            status: "error",
+            msg: "Token no válido",
         });
     }
 });

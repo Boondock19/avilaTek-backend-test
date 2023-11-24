@@ -26,9 +26,9 @@ const auth_1 = require("../routes/auth");
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
-        this.port = process.env.PORT || '8000';
-        this.usuariosPath = '/api/users';
-        this.authPath = '/api/auth';
+        this.port = process.env.PORT || "8000";
+        this.usuariosPath = "/api/users";
+        this.authPath = "/api/auth";
         //
         this.conectDB();
         // Middlewares
@@ -42,7 +42,7 @@ class Server {
         // Lectura y parseo del body
         this.app.use(express_1.default.json());
         // Directorio público
-        this.app.use(express_1.default.static('public'));
+        this.app.use(express_1.default.static("public"));
     }
     conectDB() {
         return __awaiter(this, void 0, void 0, function* () {

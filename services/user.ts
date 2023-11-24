@@ -2,9 +2,8 @@ import { passwordEncrypt } from "../helpers/passwordEncrypt";
 import mongoose from "mongoose";
 import { User } from "../models/user";
 
-
 // Necesitamos esta constante para poder hacer cast de un string a un ObjectId de mongo.
-const ObjectId = mongoose.Types.ObjectId
+const ObjectId = mongoose.Types.ObjectId;
 
 /**
  * Funcion encargada de manejar la verificacion de los datos en la DB.
@@ -18,7 +17,7 @@ const ObjectId = mongoose.Types.ObjectId
 export const saveUser = async (
   username: string,
   email: string,
-  password: string
+  password: string,
 ) => {
   try {
     // Verificar que el usuario no exista en DB.
@@ -31,7 +30,7 @@ export const saveUser = async (
 
     // Encriptar contraseña
     const passwordEncrypted = passwordEncrypt(password);
-   
+
     // Crear usuario
     const user = new User({ username, email, password: passwordEncrypted });
 
@@ -46,10 +45,9 @@ export const saveUser = async (
   }
 };
 
-
 /**
  * De momento esta funcion es utulizada por la ruta de currentuser,
- * pero se puede reutilizar para obtener a un usuario por su ID con 
+ * pero se puede reutilizar para obtener a un usuario por su ID con
  * otra ruta.
  * Funcion encargarda de obtener a un usuario por su id
  * @param id id del usuario
@@ -57,16 +55,13 @@ export const saveUser = async (
  */
 export const getUserById = async (id: string) => {
   try {
-      if (!id) throw new Error("El id es requerido");
+    if (!id) throw new Error("El id es requerido");
 
-      const foundUser = await User.findById(id);
+    const foundUser = await User.findById(id);
 
-      
+    if (!foundUser) throw new Error("El usuario no existe");
 
-      if (!foundUser) throw new Error("El usuario no existe");
-
-      return foundUser;
-
+    return foundUser;
   } catch (error) {
     console.log(error);
     if (error instanceof Error) throw new Error(error.message);
@@ -74,22 +69,22 @@ export const getUserById = async (id: string) => {
 };
 
 /**
- * 
+ *
  * @param page pagina que se quiere obtener
  * @param limit cuantos registros se quieren obtener
  * @returns un objeto con los valores de la paginacion (total de usuaruos) y los usuarios encontrados segun el limit
  */
 
-export const getUsers = async (page:number,limit:number) => {
+export const getUsers = async (page: number, limit: number) => {
   try {
     const users = await User.find()
-    .limit(limit * 1)
-    .skip((page -1) * limit)
+      .limit(limit * 1)
+      .skip((page - 1) * limit);
 
     const totalUsers = await User.countDocuments();
-    return {users,totalUsers};
+    return { users, totalUsers };
   } catch (error) {
     console.log(error);
     if (error instanceof Error) throw new Error(error.message);
   }
-}
+};

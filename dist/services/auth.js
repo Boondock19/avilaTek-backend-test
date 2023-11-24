@@ -33,14 +33,14 @@ const loginUser = (username, password) => __awaiter(void 0, void 0, void 0, func
         // El username es unico por definicion de la coleccion
         const foundUser = yield user_1.User.findOne({ username });
         if (!foundUser)
-            throw new Error('Usuario o contraseña incorrectos');
+            throw new Error("Usuario o contraseña incorrectos");
         // Verificar contraseña
         const passwordMatch = (0, passwordEncrypt_1.comparePassword)(password, foundUser.password);
         if (!passwordMatch)
-            throw new Error('Usuario o contraseña incorrectos');
+            throw new Error("Usuario o contraseña incorrectos");
         // si el status es false, no se permite el login porque el usuario esta deshabilitado
         if (!foundUser.status)
-            throw new Error('El usuario se encuentra deshabilitado, contacte al administrador');
+            throw new Error("El usuario se encuentra deshabilitado, contacte al administrador");
         // si el usuario ya tiene una sesion activa, se permite el login
         // ya que si el token esta vencido o no, se permite que inicie sesion
         // si todo esta bien, se actualiza el campo session a true
@@ -66,10 +66,10 @@ const logoutUser = (id) => __awaiter(void 0, void 0, void 0, function* () {
         // Verificar que la sesion exista en DB.
         const foundUser = yield user_1.User.findById(new ObjectId(id));
         if (!foundUser)
-            throw new Error('Usuario no existe');
+            throw new Error("Usuario no existe");
         // Si el usuario no tiene una sesion activa, no se permite el logout
         if (!foundUser.session)
-            throw new Error('El usuario no tiene una sesion activa');
+            throw new Error("El usuario no tiene una sesion activa");
         // si todo esta bien, se actualiza el campo session a false
         foundUser.session = false;
         yield foundUser.save();
